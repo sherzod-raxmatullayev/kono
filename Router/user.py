@@ -83,3 +83,13 @@ async def qism_callback(query: CallbackQuery):
         await query.message.answer_video(video=qismii[3], caption=f'{qismii[1]}', reply_markup=qism(qismii[2]))
     else:
         await query.message.answer("❌ Qism topilmadi.")
+
+@user_router.message(F.text)
+async def skrech(message:Message):
+    if message.text.isdigit():
+        anime = get_anime_json(int(message.text))
+        if anime:
+            text = anime["text"]
+            file_id = anime["file_id"]
+            update_anime_views(int(message.text))
+            await message.answer_photo(photo=file_id, caption=text, reply_markup=qism(int(message.text)))

@@ -56,7 +56,7 @@ async def admin_series_3(message:Message, state:FSMContext):
         anime_data = add_qism(int(anime_id), file_id, int(qisim))
         if anime_data != None:
             anime = get_anime_by_id(int(anime_id))
-            await message.bot.send_photo(chat_id=-1002165160594,photo=anime[8], caption=f"✅Yangi qisim qo'shildi: ID {anime_data}\n\nQo'shilgan qismi: {qisim}\n📛 Nomi: {anime[1]}\n🎭 Janri: {anime[2]}\n📅 Yili: {anime[3]}\n🎙️ Duber: {anime[4]} ", reply_markup=kanal_yuklash(int(anime[0])))
+            await message.bot.send_photo(chat_id=-1002165160594,photo=anime[8], caption=f"✅Yangi qisim qo'shildi: ID {anime_data}\n\n{qisim} - qisim\n📛 Nomi: {anime[1]}\n🎭 Janri: {anime[2]}\n📅 Yili: {anime[3]}\n🎙️ Duber: {anime[4]} ", reply_markup=kanal_yuklash(int(anime[0])))
             await message.answer("Anime qo'shildi Kanalga tashladim!")
             await state.clear()
 
