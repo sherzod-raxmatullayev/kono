@@ -93,3 +93,5 @@ async def skrech(message:Message):
             file_id = anime["file_id"]
             update_anime_views(int(message.text))
             await message.answer_photo(photo=file_id, caption=text, reply_markup=qism(int(message.text)))
+        else:
+            await message.answer("Anime topilmadi")
