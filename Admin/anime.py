@@ -58,8 +58,10 @@ async def add_anime_file(message: Message, state: FSMContext):
             await state.clear()
             return
         id = add_anime(name, janr, yili, duber, int(qisimlar), file_id)
-        await message.bot.send_photo(chat_id=-1002165160594, photo=file_id, caption=f"✅ Yangi anime qo'shildi: ID {id}\n\n📛 Nomi: {name}\n🎭 Janri: {janr}\n📅 Yili: {yili}\n🎙️ Duber: {duber}\n🎬 Qismlari: {qisimlar}"
-                                     ,reply_markup=kanal_yuklash(id))
+        if message.caption == None:
+            await message.bot.send_photo(chat_id=-1002165160594, photo=file_id, caption=f"✅ Yangi anime qo'shildi: ID {id}\n\n📛 Nomi: {name}\n🎭 Janri: {janr}\n📅 Yili: {yili}\n🎙️ Duber: {duber}\n🎬 Qismlari: {qisimlar}"
+                                        ,reply_markup=kanal_yuklash(id))
+        
         await message.answer(f"Anime '{name}' muvaffaqiyatli qo'shildi! ID: {id}")
         await state.clear()
     except Exception as e:
