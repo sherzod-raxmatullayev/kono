@@ -197,6 +197,14 @@ def get_all_anime():
     conn.close()
     return animes
 
+def get_anime_by_name(anime_name: str):
+    conn = get_connection()
+    cursor = conn.cursor()
+    cursor.execute("SELECT * FROM anime WHERE name LIKE ?", (f"%{anime_name}%",))
+    results = cursor.fetchall()
+    conn.close()
+    return results
+
 
 def update_anime_views(anime_id: int):
     conn = get_connection()

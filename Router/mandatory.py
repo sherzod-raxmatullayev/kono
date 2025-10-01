@@ -25,7 +25,7 @@ async def check_call_data(message: CallbackQuery ) -> bool:
             return False
     return False
 
-
+    
 async def check_message(message : Message) -> bool:
     user_id = message.from_user.id
     channels = get_all_subscriptions()

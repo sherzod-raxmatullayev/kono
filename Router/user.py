@@ -3,8 +3,8 @@ from aiogram.types import Message, CallbackQuery
 from aiogram.filters import CommandStart
 import asyncio
 
-from baza import add_user, get_user_by_telegram, get_anime_json, update_anime_views, get_qism_by_id
-from Button.user_button import yuklash, qism
+from baza import add_user, get_user_by_telegram, get_anime_json, update_anime_views, get_qism_by_id, get_anime_by_name
+from Button.user_button import yuklash, qism, result
 
 user_router = Router()
 
@@ -84,6 +84,21 @@ async def qism_callback(query: CallbackQuery):
     else:
         await query.message.answer("❌ Qism topilmadi.")
 
+
+@user_router.callback_query(F.data.startswith("anime_"))
+async def anime_callback(query: CallbackQuery):
+    anime_id = int(query.data.split("_")[1])
+    await query.answer(f"Anime ID: {anime_id}")
+    anime = get_anime_json(anime_id)
+    if anime:
+        text = anime["text"]
+        file_id = anime["file_id"]
+        update_anime_views(anime_id)
+        await query.message.answer_photo(photo=file_id, caption=text, reply_markup=qism(anime_id))
+    else:
+        await query.message.answer("❌ Anime topilmadi.")
+
+
 @user_router.message(F.text)
 async def skrech(message:Message):
     if message.text.isdigit():
@@ -95,3 +110,10 @@ async def skrech(message:Message):
             await message.answer_photo(photo=file_id, caption=text, reply_markup=qism(int(message.text)))
         else:
             await message.answer("Anime topilmadi")
+    else:
+        if get_anime_by_name(message.text):
+            await message.answer(
+                text='Topilgan animelar: ',
+                reply_markup= result(get_anime_by_name(message.text))
+
+            )

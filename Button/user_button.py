@@ -9,6 +9,13 @@ def yuklash(id):
     return builder.as_markup()
 
 
+def result(anime: list):
+    builder = InlineKeyboardBuilder()
+    for i in anime:
+        builder.button(text=i[1], callback_data=f"anime_{i[0]}")
+    builder.adjust(1)
+    return builder.as_markup()
+
 def qism(anime_id: int):
     builder = InlineKeyboardBuilder()
     sm = get_qisimlar_by_anime(anime_id)
